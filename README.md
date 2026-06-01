@@ -1,2 +1,2 @@
 # vector-search-cpp
-C++ implementation for vector search
+C++ implementation for basic algorithms of vector search
