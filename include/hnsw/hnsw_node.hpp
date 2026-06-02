@@ -20,5 +20,7 @@ namespace hnsw {
             : internal_id(int_id), external_label(ext_label), vector_index(vec_index) {
                 neighbors.resize(level + 1); // Khởi tạo danh sách neighbors cho tất cả các level
             }
+        
+        void printDebugInfo() const;
     };
 }
