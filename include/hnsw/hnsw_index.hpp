@@ -9,7 +9,7 @@
 namespace hnsw {
     class HNSWIndex {
         private:
-            // 1. Quản lý bộ nhớ phẳng để cache line hiệu quả
+            // 1. Quản lý bộ nhớ phẳng để cache line 
             size_t dim; // Số chiều của vector (cố định)
             std::vector<float> all_vectors_data; // Lưu trừ liên tục toàn bộ các giá trị float của tất cả vector (vector_index * dim là vị trí bắt đầu của vector đó)
             std::vector<Node> nodes; // Danh sách các node, mỗi node chứa thôngtin về vector và neighbors
@@ -30,7 +30,7 @@ namespace hnsw {
             double level_factor; // Xác suất giảm dần theo tầng (thường là 1 / M)
 
             // 5. Hàm hỗ trợ nội bộ
-            // Sinh tầng ngẫu nhiên cho node mới, sử dụng phân phối geometric với xác suất giảm dần theo tầng
+            // Sinh tầng ngẫu nhiên cho node mới, sử dụng phân phối đều với xác suất giảm dần theo tầng
             int getRandomLevel();
             // Trích xuất vector của node dựa trên internal_id, trả về std::span để truy cập hiệu quả mà không cần copy
             std::span<const float> getNodeVector(size_t internal_id) const; 
