@@ -7,6 +7,10 @@
 #include <cstddef>
 
 namespace hnsw {
+    
+    // Con trỏ hàm cho distance function
+    using DistanceFunction = float(*)(std::span<const float>, std::span<const float>);
+
     class HNSWIndex {
         private:
             // 1. Quản lý bộ nhớ phẳng để cache line 
@@ -14,6 +18,8 @@ namespace hnsw {
             std::vector<float> all_vectors_data; // Lưu trừ liên tục toàn bộ các giá trị float của tất cả vector (vector_index * dim là vị trí bắt đầu của vector đó)
             std::vector<Node> nodes; // Danh sách các node, mỗi node chứa thôngtin về vector và neighbors
             
+            DistanceFunction distance_func; // Hàm tính khoảng cách giữa hai vector (có thể là Euclidean, Cosine, v.v.)
+
             // 2. Tham số của HNSW
             size_t M; // Số lượng liên kết tối đa của một node ở các tầng trên
             size_t M0; // Số lượng liên kết tối đa của một node ở tầng 0
@@ -39,7 +45,13 @@ namespace hnsw {
 
         
         public:
-            HNSWIndex(size_t dimension, size_t m = 16, size_t ef_construction = 200, size_t ef_search = 50);
+            HNSWIndex(
+                size_t dimension, 
+                DistanceFunction distance_metric,
+                size_t m = 16, 
+                size_t ef_construction = 200, 
+                size_t ef_search = 50
+            );
 
             void addPoint(std::span<const float> vector_view, size_t external_label);
 
