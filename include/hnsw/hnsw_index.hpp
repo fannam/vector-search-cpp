@@ -5,6 +5,8 @@
 #include <random>
 #include <span>
 #include <cstddef>
+#include <queue>
+#include <utility>
 
 namespace hnsw {
     
@@ -36,12 +38,16 @@ namespace hnsw {
             double level_factor; // Xác suất giảm dần theo tầng (thường là 1 / M)
 
             // 5. Hàm hỗ trợ nội bộ
+            using Candidate = std::pair<float, size_t>;
+
             // Sinh tầng ngẫu nhiên cho node mới, sử dụng phân phối đều với xác suất giảm dần theo tầng
             int getRandomLevel();
             // Trích xuất vector của node dựa trên internal_id, trả về std::span để truy cập hiệu quả mà không cần copy
             std::span<const float> getNodeVector(size_t internal_id) const; 
 
             size_t searchAtLayer(std::span<const float> query, size_t enter_node, size_t level) const;
+            static bool shouldStopSearch(float candidate_distance, const std::priority_queue<Candidate>& candidates, size_t ef);
+            static std::vector<size_t> selectClosestNeighbors(std::priority_queue<Candidate> candidates, size_t limit);
 
         
         public:

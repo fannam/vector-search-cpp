@@ -1,0 +1,12 @@
+build/
+
+# CMake-generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+
+# Test/build artifacts
+Testing/
+*.dir/

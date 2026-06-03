@@ -1,4 +1,5 @@
 #include "hnsw/hnsw_node.hpp"
+#include <iostream>
 
 namespace hnsw {
 
